@@ -198,7 +198,7 @@ key_t generujKlucz(char *nazwaPliku, int liczba) {
 int generujIDPamieciDzielonej(key_t klucz) {
 
     int id;
-    if((id = shmget(klucz, sizeof(int)+sizeof(struct wpis)*(*liczbaSlotow), 0640 | IPC_CREAT | IPC_EXCL)) == -1) {
+    if((id = shmget(klucz, sizeof(int)+sizeof(struct wpis)*(*liczbaSlotow), 0666 | IPC_CREAT | IPC_EXCL)) == -1) {
         perror("blad shmget (nie utworzono segmentu pamieci dzielonej, nie zapisano ID tej pamieci)");
         exit(errno);
     }
@@ -212,7 +212,7 @@ int generujIDPamieciDzielonej(key_t klucz) {
 int generujIDZbioruSemaforow(key_t klucz, int liczbaSemaforow) {
 
     int id;
-    if((id = semget(klucz, liczbaSemaforow, 0660 | IPC_CREAT | IPC_EXCL)) == -1) {
+    if((id = semget(klucz, liczbaSemaforow, 0666 | IPC_CREAT | IPC_EXCL)) == -1) {
         perror("blad semget (nie utworzono zbioru semaforow, nie pobrano ID tego zbioru)");
         usunSegmentPamieciDzielonej();
         exit(errno);
